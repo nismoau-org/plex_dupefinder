@@ -18,10 +18,23 @@ except ImportError:
 
 from plexapi.server import PlexServer
 import requests
+import argparse
 
 ############################################################
 # INIT
 ############################################################
+
+# Allow passing of PLEX_TOKEN in as argument
+parser = argparse.ArgumentParser(description='Plex Dupefinder')
+parser.add_argument('--plex-token', help='Plex token to authenticate with Plex server')
+args = parser.parse_args()
+
+# Import config as before
+from config import cfg
+
+# Override PLEX_TOKEN if provided in arguments
+if args.plex_token:
+    cfg['PLEX_TOKEN'] = args.plex_token
 
 # Setup logger
 log_filename = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), 'activity.log')
